@@ -1,8 +1,12 @@
+import AuthButton from "@/components/auth-button";
 import { FileUploader } from "@/components/file-uploader";
 
 export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-8">
+      <div className="absolute top-4 right-4">
+        <AuthButton />
+      </div>
       <main className="flex flex-col items-center text-center gap-8">
         <h1 className="text-4xl font-bold tracking-tight lg:text-5xl">
           Create Your Family Portrait with AI
