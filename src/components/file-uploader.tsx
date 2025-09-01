@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { UploadCloud, X } from 'lucide-react';
 import Image from 'next/image';
 import { CldUploadWidget } from 'next-cloudinary';
+import { Separator } from '@/components/ui/separator';
 
 export function FileUploader() {
   const [files, setFiles] = useState<any[]>([]);
@@ -106,18 +107,25 @@ export function FileUploader() {
           </Button>
 
           {generatedImage && (
-            <div>
-              <h3 className="text-lg font-medium">Generated Portrait:</h3>
-              <div className="mt-4">
-                <Image
-                  src={generatedImage}
-                  alt="Generated Portrait"
-                  width={512}
-                  height={512}
-                  className="rounded-md object-cover"
-                />
+            <>
+              <div>
+                <h3 className="text-lg font-medium">Generated Portrait:</h3>
+                <div className="mt-4">
+                  <Image
+                    src={generatedImage}
+                    alt="Generated Portrait"
+                    width={512}
+                    height={512}
+                    className="rounded-md object-cover"
+                  />
+                </div>
               </div>
-            </div>
+              <Separator className="my-4" />
+              <div className="flex flex-col items-center gap-2">
+                <h3 className="text-lg font-medium">Ready for the full experience?</h3>
+                <Button>Sign Up Now</Button>
+              </div>
+            </>
           )}
         </div>
       </CardContent>

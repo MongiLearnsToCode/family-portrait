@@ -27,7 +27,7 @@
 - [x] Allow up to 3 image uploads (Cloudinary)  
 - [x] Call Gemini 2.5 Flash → generate watermarked portrait  
 - [x] Display portrait preview  
-- [ ] Add CTA → “Sign up for full experience”  
+- [x] Add CTA → “Sign up for full experience”  
 
 ---
 
