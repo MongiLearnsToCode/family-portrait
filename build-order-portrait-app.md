@@ -36,7 +36,7 @@
   - [x] Unlimited uploads (store in Cloudinary)  
   - [ ] Save metadata to Convex DB  
 - [ ] Portrait Generation  
-  - [ ] Preprocess uploaded faces (Cloudinary transformations)  
+  - [x] Preprocess uploaded faces (Cloudinary transformations)  
   - [ ] Call Gemini 2.5 Flash API with aligned faces  
   - [ ] Save generated portrait in Convex DB  
 - [ ] User Library  

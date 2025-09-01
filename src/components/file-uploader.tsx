@@ -12,21 +12,33 @@ import { Separator } from '@/components/ui/separator';
 export function FileUploader() {
   const { data: session } = useSession();
   const [files, setFiles] = useState<any[]>([]);
+  const [transformedFiles, setTransformedFiles] = useState<any[]>([]);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const onUpload = (result: any) => {
+  const onUpload = async (result: any) => {
+    const publicId = result.info.public_id;
+    const response = await fetch('/api/transform', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ publicId }),
+    });
+    const data = await response.json();
+    setTransformedFiles((prevFiles) => [...prevFiles, { ...result.info, secure_url: data.url }]);
     setFiles((prevFiles) => [...prevFiles, result.info]);
   };
 
   const removeFile = (index: number) => {
     setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+    setTransformedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
   };
 
   const handleUpload = async () => {
     setLoading(true);
     try {
-      const imageUrls = files.map((file) => file.secure_url);
+      const imageUrls = transformedFiles.map((file) => file.secure_url);
       const response = await fetch('/api/generate', {
         method: 'POST',
         headers: {
@@ -78,11 +90,11 @@ export function FileUploader() {
             }}
           </CldUploadWidget>
 
-          {files.length > 0 && (
+          {transformedFiles.length > 0 && (
             <div>
               <h3 className="text-lg font-medium">Selected Files:</h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
-                {files.map((file, index) => (
+                {transformedFiles.map((file, index) => (
                   <div key={index} className="relative">
                     <Image
                       src={file.secure_url}
