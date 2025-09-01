@@ -9,6 +9,8 @@ import { CldUploadWidget } from 'next-cloudinary';
 
 export function FileUploader() {
   const [files, setFiles] = useState<any[]>([]);
+  const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const onUpload = (result: any) => {
     setFiles((prevFiles) => [...prevFiles, result.info]);
@@ -18,9 +20,29 @@ export function FileUploader() {
     setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
   };
 
-  const handleUpload = () => {
-    // TODO: Implement Gemini API call
-    console.log('Uploading files:', files);
+  const handleUpload = async () => {
+    setLoading(true);
+    try {
+      const imageUrls = files.map((file) => file.secure_url);
+      const response = await fetch('/api/generate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ imageUrls }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      setGeneratedImage(data.text);
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -77,13 +99,26 @@ export function FileUploader() {
           )}
           <Button
             onClick={handleUpload}
-            disabled={files.length === 0 || files.length > 3}
+            disabled={files.length === 0 || files.length > 3 || loading}
             className="mt-4"
           >
-            {files.length > 3
-              ? 'Please select up to 3 files'
-              : 'Generate Portrait'}
+            {loading ? 'Generating...' : (files.length > 3 ? 'Please select up to 3 files' : 'Generate Portrait')}
           </Button>
+
+          {generatedImage && (
+            <div>
+              <h3 className="text-lg font-medium">Generated Portrait:</h3>
+              <div className="mt-4">
+                <Image
+                  src={generatedImage}
+                  alt="Generated Portrait"
+                  width={512}
+                  height={512}
+                  className="rounded-md object-cover"
+                />
+              </div>
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>
