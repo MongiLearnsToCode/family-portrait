@@ -37,7 +37,7 @@
   - [ ] Save metadata to Convex DB  
 - [ ] Portrait Generation  
   - [x] Preprocess uploaded faces (Cloudinary transformations)  
-  - [ ] Call Gemini 2.5 Flash API with aligned faces  
+  - [x] Call Gemini 2.5 Flash API with aligned faces  
   - [ ] Save generated portrait in Convex DB  
 - [ ] User Library  
   - [ ] List generated portraits  
