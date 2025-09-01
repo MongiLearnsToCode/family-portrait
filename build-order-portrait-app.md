@@ -48,14 +48,14 @@
 ---
 
 ## 5. Premium Features
-- [ ] Background Selection  
-  - [ ] Add background selector (preset list)  
-  - [ ] Pass background choice to Gemini prompt  
-- [ ] Artistic Styles  
-  - [ ] Add style selector (realistic, painting, cartoon)  
-  - [ ] Pass style param to Gemini prompt  
-- [ ] High-Resolution Export  
-  - [ ] Implement 4K export (no watermark)  
+- [x] Background Selection  
+  - [x] Add background selector (preset list)  
+  - [x] Pass background choice to Gemini prompt  
+- [x] Artistic Styles  
+  - [x] Add style selector (realistic, painting, cartoon)  
+  - [x] Pass style param to Gemini prompt  
+- [x] High-Resolution Export  
+  - [x] Implement 4K export (no watermark)  
   - [ ] Enable only for premium users  
 - [ ] Saved Portraits  
   - [ ] Save multiple generated portraits in user account  
@@ -73,15 +73,15 @@
 ## 7. Privacy & Security
 - [ ] Auto-delete raw uploads after portrait generation (if not saved)  
 - [ ] Encrypt generated portrait metadata in Convex  
-- [ ] Add privacy policy + consent flow  
+- [x] Add privacy policy + consent flow  
 
 ---
 
 ## 8. UX & Polish
 - [ ] Landing page design with shadcn/ui  
 - [ ] CTA buttons → sandbox demo → signup → premium  
-- [ ] Loading states for uploads & AI generation  
-- [ ] Error handling (Gemini fails, Cloudinary upload fails, etc.)  
+- [x] Loading states for uploads & AI generation  
+- [x] Error handling (Gemini fails, Cloudinary upload fails, etc.)  
 
 ---
 

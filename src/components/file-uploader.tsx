@@ -4,17 +4,21 @@ import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { UploadCloud, X } from 'lucide-react';
+import { UploadCloud, X, AlertCircle } from 'lucide-react';
 import Image from 'next/image';
 import { CldUploadWidget } from 'next-cloudinary';
 import { Separator } from '@/components/ui/separator';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
-export function FileUploader() {
+import { Skeleton } from '@/components/ui/skeleton';
+
+export function FileUploader({ background, style, hires }: { background: string, style: string, hires: boolean }) {
   const { data: session } = useSession();
   const [files, setFiles] = useState<any[]>([]);
   const [transformedFiles, setTransformedFiles] = useState<any[]>([]);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const onUpload = async (result: any) => {
     const publicId = result.info.public_id;
@@ -37,6 +41,7 @@ export function FileUploader() {
 
   const handleUpload = async () => {
     setLoading(true);
+    setError(null);
     try {
       const imageUrls = transformedFiles.map((file) => file.secure_url);
       const response = await fetch('/api/generate', {
@@ -44,17 +49,18 @@ export function FileUploader() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ imageUrls }),
+        body: JSON.stringify({ imageUrls, background, style, hires }),
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error('Failed to generate portrait. Please try again.');
       }
 
       const data = await response.json();
       setGeneratedImage(data.text);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error:', error);
+      setError(error.message || 'An unknown error occurred.');
     } finally {
       setLoading(false);
     }
@@ -114,6 +120,17 @@ export function FileUploader() {
               </div>
             </div>
           )}
+
+          {error && (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>
+                {error}
+              </AlertDescription>
+            </Alert>
+          )}
+
           <Button
             onClick={handleUpload}
             disabled={files.length === 0 || files.length > fileLimit || loading}
@@ -122,7 +139,16 @@ export function FileUploader() {
             {loading ? 'Generating...' : (files.length > fileLimit ? `Please select up to ${fileLimit} files` : 'Generate Portrait')}
           </Button>
 
-          {generatedImage && (
+          {loading && (
+            <div>
+              <h3 className="text-lg font-medium">Generated Portrait:</h3>
+              <div className="mt-4">
+                <Skeleton className="w-[512px] h-[512px] rounded-md" />
+              </div>
+            </div>
+          )}
+
+          {generatedImage && !loading && (
             <>
               <div>
                 <h3 className="text-lg font-medium">Generated Portrait:</h3>

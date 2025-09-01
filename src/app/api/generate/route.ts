@@ -15,11 +15,17 @@ async function urlToGenerativePart(url: string, mimeType: any) {
 }
 
 export async function POST(req: Request) {
-  const { imageUrls } = await req.json();
+  const { imageUrls, background, style, hires } = await req.json();
 
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-  const prompt = "Create a family portrait from these images. The portrait should be in a realistic style, with a neutral background. The final image should have a watermark in the bottom right corner that says 'Made with Family Portrait AI'.";
+  let prompt = `Create a family portrait from these images. The portrait should be in a ${style} style, with a ${background} background.`;
+
+  if (hires) {
+    prompt += " The final image should be in 4K resolution and have no watermark.";
+  } else {
+    prompt += " The final image should have a watermark in the bottom right corner that says 'Made with Family Portrait AI'.";
+  }
 
   try {
     const imageParts = await Promise.all(
