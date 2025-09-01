@@ -1,60 +1,30 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { UploadCloud, X } from "lucide-react";
-import Image from "next/image";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { UploadCloud, X } from 'lucide-react';
+import Image from 'next/image';
+import { CldUploadWidget } from 'next-cloudinary';
 
 export function FileUploader() {
-  const [files, setFiles] = useState<File[]>([]);
-  const [previews, setPreviews] = useState<string[]>([]);
+  const [files, setFiles] = useState<any[]>([]);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      const newFiles = Array.from(event.target.files);
-      setFiles((prevFiles) => [...prevFiles, ...newFiles]);
-      generatePreviews(newFiles);
-    }
-  };
-
-  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-  };
-
-  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    const newFiles = Array.from(event.dataTransfer.files);
-    setFiles((prevFiles) => [...prevFiles, ...newFiles]);
-    generatePreviews(newFiles);
-  };
-
-  const generatePreviews = (files: File[]) => {
-    const newPreviews = files.map((file) => URL.createObjectURL(file));
-    setPreviews((prevPreviews) => [...prevPreviews, ...newPreviews]);
+  const onUpload = (result: any) => {
+    setFiles((prevFiles) => [...prevFiles, result.info]);
   };
 
   const removeFile = (index: number) => {
     setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
-    setPreviews((prevPreviews) => {
-      const newPreviews = prevPreviews.filter((_, i) => i !== index);
-      URL.revokeObjectURL(previews[index]);
-      return newPreviews;
-    });
   };
 
   const handleUpload = () => {
-    // TODO: Implement Cloudinary upload
-    console.log("Uploading files:", files);
+    // TODO: Implement Gemini API call
+    console.log('Uploading files:', files);
   };
 
   return (
-    <Card
-      className="w-full max-w-lg"
-      onDragOver={handleDragOver}
-      onDrop={handleDrop}
-    >
+    <Card className="w-full max-w-lg">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <UploadCloud className="w-6 h-6" />
@@ -63,29 +33,32 @@ export function FileUploader() {
       </CardHeader>
       <CardContent>
         <div className="grid w-full items-center gap-4">
-          <div className="flex flex-col space-y-1.5 border-2 border-dashed border-muted-foreground/50 rounded-lg p-8 text-center">
-            <label
-              htmlFor="picture"
-              className="cursor-pointer text-muted-foreground"
-            >
-              Drag & drop files here, or click to select files
-            </label>
-            <Input
-              id="picture"
-              type="file"
-              multiple
-              onChange={handleFileChange}
-              className="hidden"
-            />
-          </div>
-          {previews.length > 0 && (
+          <CldUploadWidget
+            uploadPreset="YOUR_UPLOAD_PRESET"
+            onSuccess={onUpload}
+          >
+            {({ open }) => {
+              return (
+                <div
+                  className="flex flex-col space-y-1.5 border-2 border-dashed border-muted-foreground/50 rounded-lg p-8 text-center cursor-pointer"
+                  onClick={() => open()}
+                >
+                  <div className="text-muted-foreground">
+                    Drag & drop files here, or click to select files
+                  </div>
+                </div>
+              );
+            }}
+          </CldUploadWidget>
+
+          {files.length > 0 && (
             <div>
               <h3 className="text-lg font-medium">Selected Files:</h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
-                {previews.map((preview, index) => (
+                {files.map((file, index) => (
                   <div key={index} className="relative">
                     <Image
-                      src={preview}
+                      src={file.secure_url}
                       alt={`Preview ${index}`}
                       width={150}
                       height={150}
@@ -108,8 +81,8 @@ export function FileUploader() {
             className="mt-4"
           >
             {files.length > 3
-              ? "Please select up to 3 files"
-              : "Generate Portrait"}
+              ? 'Please select up to 3 files'
+              : 'Generate Portrait'}
           </Button>
         </div>
       </CardContent>

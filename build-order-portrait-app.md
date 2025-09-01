@@ -24,7 +24,7 @@
 
 ## 3. Instant Sandbox (No-Login Demo)
 - [x] Create landing page with upload UI (shadcn file uploader)  
-- [ ] Allow up to 3 image uploads (Cloudinary)  
+- [x] Allow up to 3 image uploads (Cloudinary)  
 - [ ] Call Gemini 2.5 Flash → generate watermarked portrait  
 - [ ] Display portrait preview  
 - [ ] Add CTA → “Sign up for full experience”  
