@@ -33,7 +33,7 @@
 
 ## 4. Core App (Logged-In Users)
 - [ ] Upload & Management  
-  - [ ] Unlimited uploads (store in Cloudinary)  
+  - [x] Unlimited uploads (store in Cloudinary)  
   - [ ] Save metadata to Convex DB  
 - [ ] Portrait Generation  
   - [ ] Preprocess uploaded faces (Cloudinary transformations)  

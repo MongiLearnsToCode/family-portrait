@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { UploadCloud, X } from 'lucide-react';
@@ -9,6 +10,7 @@ import { CldUploadWidget } from 'next-cloudinary';
 import { Separator } from '@/components/ui/separator';
 
 export function FileUploader() {
+  const { data: session } = useSession();
   const [files, setFiles] = useState<any[]>([]);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -45,6 +47,8 @@ export function FileUploader() {
       setLoading(false);
     }
   };
+
+  const fileLimit = session ? 100 : 3;
 
   return (
     <Card className="w-full max-w-lg">
@@ -100,10 +104,10 @@ export function FileUploader() {
           )}
           <Button
             onClick={handleUpload}
-            disabled={files.length === 0 || files.length > 3 || loading}
+            disabled={files.length === 0 || files.length > fileLimit || loading}
             className="mt-4"
           >
-            {loading ? 'Generating...' : (files.length > 3 ? 'Please select up to 3 files' : 'Generate Portrait')}
+            {loading ? 'Generating...' : (files.length > fileLimit ? `Please select up to ${fileLimit} files` : 'Generate Portrait')}
           </Button>
 
           {generatedImage && (
@@ -120,11 +124,15 @@ export function FileUploader() {
                   />
                 </div>
               </div>
-              <Separator className="my-4" />
-              <div className="flex flex-col items-center gap-2">
-                <h3 className="text-lg font-medium">Ready for the full experience?</h3>
-                <Button>Sign Up Now</Button>
-              </div>
+              {!session && (
+                <>
+                  <Separator className="my-4" />
+                  <div className="flex flex-col items-center gap-2">
+                    <h3 className="text-lg font-medium">Ready for the full experience?</h3>
+                    <Button>Sign Up Now</Button>
+                  </div>
+                </>
+              )}
             </>
           )}
         </div>
