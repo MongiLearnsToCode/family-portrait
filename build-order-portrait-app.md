@@ -18,7 +18,7 @@
 - [x] Install & configure Better Auth  
 - [x] Enable social logins (Google, Apple, Email)  
 - [ ] Connect auth state to Convex DB (store users)  
-- [ ] Implement protected routes (premium features)  
+- [x] Implement protected routes (premium features)  
 
 ---
 
