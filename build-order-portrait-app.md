@@ -26,7 +26,7 @@
 - [x] Create landing page with upload UI (shadcn file uploader)  
 - [x] Allow up to 3 image uploads (Cloudinary)  
 - [x] Call Gemini 2.5 Flash → generate watermarked portrait  
-- [ ] Display portrait preview  
+- [x] Display portrait preview  
 - [ ] Add CTA → “Sign up for full experience”  
 
 ---
