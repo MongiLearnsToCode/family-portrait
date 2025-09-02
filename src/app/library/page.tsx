@@ -12,6 +12,7 @@ import { AlertCircle } from 'lucide-react';
 
 function LibraryPage() {
   const portraits = useQuery(api.portraits.getPortraits);
+  const currentUser = useQuery(api.users.getCurrentUser);
   const deletePortrait = useMutation(api.portraits.deletePortrait);
   const savePortrait = useMutation(api.portraits.savePortrait);
   const [loading, setLoading] = useState<string | null>(null);
@@ -93,6 +94,12 @@ function LibraryPage() {
                   disabled={loading === portrait._id}
                 >
                   {loading === portrait._id ? 'Re-generating...' : 'Re-generate'}
+                </Button>
+                <Button
+                  onClick={() => window.open(portrait.imageUrl, '_blank')}
+                  disabled={!currentUser?.premium || !portrait.hires}
+                >
+                  Download
                 </Button>
               </CardFooter>
             </Card>

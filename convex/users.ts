@@ -27,6 +27,23 @@ export const store = mutation({
     return await ctx.db.insert("users", {
       name: identity.name!,
       tokenIdentifier: identity.tokenIdentifier,
+      premium: false,
     });
+  },
+});
+
+export const getCurrentUser = query({
+  handler: async (ctx) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      return null;
+    }
+
+    return await ctx.db
+      .query("users")
+      .withIndex("by_token", (q) =>
+        q.eq("tokenIdentifier", identity.tokenIdentifier)
+      )
+      .unique();
   },
 });

@@ -5,6 +5,7 @@ export default defineSchema({
   users: defineTable({
     name: v.string(),
     tokenIdentifier: v.string(),
+    premium: v.boolean(),
   }).index("by_token", ["tokenIdentifier"]),
   portraits: defineTable({
     userId: v.id("users"),

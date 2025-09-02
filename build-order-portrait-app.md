@@ -54,11 +54,11 @@
 - [x] Artistic Styles  
   - [x] Add style selector (realistic, painting, cartoon)  
   - [x] Pass style param to Gemini prompt  
-- [ ] High-Resolution Export  
-  - [ ] Implement 4K export (no watermark)  
-  - [ ] Enable only for premium users  
-- [ ] Saved Portraits  
-  - [ ] Save multiple generated portraits in user account  
+- [x] High-Resolution Export  
+  - [x] Implement 4K export (no watermark)  
+  - [x] Enable only for premium users  
+- [x] Saved Portraits  
+  - [x] Save multiple generated portraits in user account  
 
 ---
 
