@@ -63,7 +63,7 @@
 ---
 
 ## 6. Payments (Polar.sh)
-- [ ] Integrate Polar.sh SDK  
+- [x] Integrate Polar.sh SDK  
 - [ ] Configure subscription tiers + one-off purchases  
 - [ ] Implement sandbox.polar.sh in dev mode  
 - [ ] Link premium features to subscription status  
