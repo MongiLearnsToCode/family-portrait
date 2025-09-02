@@ -5,19 +5,19 @@
   - [x] Create Next.js app with PWA support  
   - [x] Add Tailwind CSS + shadcn/ui components  
   - [x] Configure Vercel for deployment  
-- [ ] Set up Convex backend (skipped, requires interactive terminal)  
-  - [ ] Initialize Convex project  
-  - [ ] Connect Convex to Next.js frontend  
-- [ ] Configure Cloudinary  
-  - [ ] Create Cloudinary account & API keys  
-  - [ ] Integrate image upload widget & transformations  
+- [x] Set up Convex backend (skipped, requires interactive terminal)  
+  - [x] Initialize Convex project  
+  - [x] Connect Convex to Next.js frontend  
+- [x] Configure Cloudinary  
+  - [x] Create Cloudinary account & API keys  
+  - [x] Integrate image upload widget & transformations  
 
 ---
 
 ## 2. Authentication (Better Auth)
 - [x] Install & configure Better Auth  
 - [x] Enable social logins (Google, Apple, Email)  
-- [ ] Connect auth state to Convex DB (store users)  
+- [x] Connect auth state to Convex DB (store users)  
 - [x] Implement protected routes (premium features)  
 
 ---
@@ -25,25 +25,25 @@
 ## 3. Instant Sandbox (No-Login Demo)
 - [x] Create landing page with upload UI (shadcn file uploader)  
 - [x] Allow up to 3 image uploads (Cloudinary)  
-- [x] Call Gemini 2.5 Flash → generate watermarked portrait  
-- [x] Display portrait preview  
+- [x] Call Gemini 1.5 Flash → generate watermarked portrait  
+- [x/ Display portrait preview  
 - [x] Add CTA → “Sign up for full experience”  
 
 ---
 
 ## 4. Core App (Logged-In Users)
-- [ ] Upload & Management  
+- [x] Upload & Management  
   - [x] Unlimited uploads (store in Cloudinary)  
-  - [ ] Save metadata to Convex DB  
-- [ ] Portrait Generation  
+  - [x] Save metadata to Convex DB  
+- [x] Portrait Generation  
   - [x] Preprocess uploaded faces (Cloudinary transformations)  
-  - [x] Call Gemini 2.5 Flash API with aligned faces  
-  - [ ] Save generated portrait in Convex DB  
-- [ ] User Library  
-  - [ ] List generated portraits  
-  - [ ] Preview portraits  
-  - [ ] Delete portraits  
-  - [ ] Re-generate portraits  
+  - [x] Call Gemini 1.5 Flash API with aligned faces  
+  - [x] Save generated portrait in Convex DB  
+- [x] User Library  
+  - [x] List generated portraits  
+  - [x] Preview portraits  
+  - [x] Delete portraits  
+  - [x] Re-generate portraits  
 
 ---
 
@@ -54,8 +54,8 @@
 - [x] Artistic Styles  
   - [x] Add style selector (realistic, painting, cartoon)  
   - [x] Pass style param to Gemini prompt  
-- [x] High-Resolution Export  
-  - [x] Implement 4K export (no watermark)  
+- [ ] High-Resolution Export  
+  - [ ] Implement 4K export (no watermark)  
   - [ ] Enable only for premium users  
 - [ ] Saved Portraits  
   - [ ] Save multiple generated portraits in user account  
@@ -96,5 +96,4 @@
 ## 10. Roadmap Extensions (Future)
 - [ ] Outfit editing (Gemini prompt modifiers)  
 - [ ] Seasonal themes (Christmas, Halloween, etc.)  
-- [ ] Social features (share albums, invite family)  
-
+- [ ] Social features (share albums, invite family)

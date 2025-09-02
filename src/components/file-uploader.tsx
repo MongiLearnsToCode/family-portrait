@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
+import { useMutation } from 'convex/react';
+import { api } from '@convex/_generated/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { UploadCloud, X, AlertCircle } from 'lucide-react';
@@ -9,13 +11,13 @@ import Image from 'next/image';
 import { CldUploadWidget } from 'next-cloudinary';
 import { Separator } from '@/components/ui/separator';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-
 import { Skeleton } from '@/components/ui/skeleton';
 
 export function FileUploader({ background, style, hires }: { background: string, style: string, hires: boolean }) {
   const { data: session } = useSession();
   const [files, setFiles] = useState<any[]>([]);
   const [transformedFiles, setTransformedFiles] = useState<any[]>([]);
+  const savePortrait = useMutation(api.portraits.savePortrait);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -58,6 +60,15 @@ export function FileUploader({ background, style, hires }: { background: string,
 
       const data = await response.json();
       setGeneratedImage(data.text);
+      if (session) {
+        await savePortrait({
+          imageUrl: data.text,
+          sourceImageUrls: imageUrls,
+          background,
+          style,
+          hires,
+        });
+      }
     } catch (error: any) {
       console.error('Error:', error);
       setError(error.message || 'An unknown error occurred.');
@@ -79,7 +90,7 @@ export function FileUploader({ background, style, hires }: { background: string,
       <CardContent>
         <div className="grid w-full items-center gap-4">
           <CldUploadWidget
-            uploadPreset="YOUR_UPLOAD_PRESET"
+            uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
             onSuccess={onUpload}
           >
             {({ open }) => {
