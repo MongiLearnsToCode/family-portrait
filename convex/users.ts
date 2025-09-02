@@ -47,3 +47,10 @@ export const getCurrentUser = query({
       .unique();
   },
 });
+
+export const updatePremiumStatus = mutation({
+  args: { userId: v.id("users"), premium: v.boolean() },
+  handler: async (ctx, args) => {
+    await ctx.db.patch(args.userId, { premium: args.premium });
+  },
+});
